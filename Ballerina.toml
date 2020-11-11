@@ -1,0 +1,5 @@
+[project]
+org-name= "zero-mars"
+version= "0.1.0"
+
+[dependencies]

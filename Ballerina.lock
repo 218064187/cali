@@ -1,0 +1,14 @@
+org_name = "zero-mars"
+version = "0.1.0"
+lockfile_version = "1.0.0"
+ballerina_version = "1.2.9"
+
+[[imports."zero-mars/client:0.1.0"]]
+org_name = "zero-mars"
+name = "utils"
+version = "0.1.0"
+
+[[imports."zero-mars/service:0.1.0"]]
+org_name = "zero-mars"
+name = "utils"
+version = "0.1.0"

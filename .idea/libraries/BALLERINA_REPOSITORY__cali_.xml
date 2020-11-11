@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="BALLERINA_REPOSITORY &lt;cali&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/cali" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/zero-mars" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/zero_mars" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/balleria" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/cali" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/zero-mars" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/zero_mars" />
+      <root url="file://$USER_HOME$/.ballerina/balo_cache/balleria" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
