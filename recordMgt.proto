@@ -1,0 +1,53 @@
+syntax="proto3";
+package service;
+import "google/protobuf/wrappers.proto";
+
+service recordMgt {
+  rpc writeRecord (Record) returns (Confirmation);
+  rpc updateRecord (Record) returns (Confirmation);
+  rpc readRecord (ReadRequest) returns (Record);
+  rpc readRecordByCriterion(Criterion) returns (stream google.protobuf.StringValue);
+}
+
+
+message Record {
+  string date = 1;
+  repeated Artist artists = 2;
+  string band = 3;
+  repeated Song songs = 4;
+  string key = 5;
+  string version = 6;
+}
+
+message Artist {
+  string name = 1;
+  string member = 2;
+}
+
+message Song {
+  string title = 1;
+  string genre = 2;
+  string platform = 3;
+}
+
+// ballerina grpc --input recordMgt.proto --output src/service --mode service
+
+
+message ReadRequest{
+  string key = 1;
+  string version = 2;
+}
+
+
+message Criterion{
+  string artist_name = 1;
+  string song_title= 2;
+  string band = 3;
+  string genre = 4;
+}
+
+
+message Confirmation {
+  string key = 1;
+  string version = 2;
+}
