@@ -222,7 +222,7 @@ public function load_data(map<map<json>> record_map) returns map<map<Record>>{
 }
 
 public function record_str(Record data) returns string{
-    // returns a nicely string representation of a Record without a key and version number
+    // returns a string representation of a Record without a key and version number
     Record rec = record_parser(data);
     string songs = ", songs:[";
     string artists = ", artists:[";
