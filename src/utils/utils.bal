@@ -105,7 +105,7 @@ public function get_latest_version(map<map<Record>> record_map, string record_ke
     // gets a latest  version number of a record
     string latest_version = "";
 
-    // scenario were no updates were made yet
+  
     if has_key(record_map, record_key){
         int len = 0;
         string parent_key = get_parent_key(record_map, record_key);
