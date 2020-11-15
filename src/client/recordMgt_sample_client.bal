@@ -228,7 +228,7 @@ public function update_record(recordMgtBlockingClient blockingEp, Record rec){
 }
 
 public function read_record(recordMgtBlockingClient blockingEp, ReadRequest read_req){
-    var read_response = blockingEp->readRecordByVersion(read_req);
+    var read_response = blockingEp->readRecord(read_req);
     if (read_response is error){
         log:printError("Error from Connector: "+ read_response.reason() +
                        " - "+ <string>read_response.detail()["message"] + "\n");
