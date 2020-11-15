@@ -8,7 +8,7 @@ public function main (string... args) {
     recordMgtBlockingClient blockingEp = new("http://localhost:9090");
 
     // Write a Record
-    Record write_record_req = {
+    Record mumford_and_sons = {
         date: "22/10/2020",
         artists: [
             {
@@ -35,12 +35,43 @@ public function main (string... args) {
     };
 
     // Create a new record
-    write_record(blockingEp, write_record_req);
+    write_record(blockingEp, mumford_and_sons);
+
+    Record sam_martin = {
+        date: "15/11/2020",
+        artists: [
+            {
+                name: "Sam Martin",
+                member: "yes"
+            }
+        ],
+        band: "Sam Martin",
+        songs: [
+            {
+                title: "Born With it",
+                genre: "pop",
+                platform: "Deezer"
+            },
+            {
+                title: "The Storms",
+                genre: "pop",
+                platform: "Deezer"
+            },
+            {
+                title: "It's Gonna Get Better",
+                genre: "pop rock",
+                platform: "Deezer"
+            }
+        ]
+    };
+
+     // Create a another record
+    write_record(blockingEp, sam_martin);
 
 
     // Update a Record - providing a key only
-    string update_record_key = utils:get_key(write_record_req); //get a key of a record to be updated
-    Record update_record_req = {
+    string mumford_and_sons_key = utils:get_key(mumford_and_sons); //get a key of a record to be updated
+    Record mumford_and_sons_v2 = {
         date: "22/10/2020",
         artists: [
             {
@@ -64,20 +95,21 @@ public function main (string... args) {
                 platform: "Deezer"
             },
             {
-                title: "There will be no time",
+                title: "Guiding Light",
                 genre: "folk rock",
                 platform: "Deezer"
             }
         ]
     };
-    update_record_req["key"] = update_record_key;
+    //add a new song (Guiding Light)
+    mumford_and_sons_v2["key"] = mumford_and_sons_key;
     log:printInfo("::::::Update an Existing Record: (key only)");
-    update_record(blockingEp, update_record_req);
+    update_record(blockingEp, mumford_and_sons_v2);
 
 
     // Update a Record - providing a key and version
-    string update_record_keykv = utils:get_key(update_record_req); //get a key of a record to be updated
-    Record update_record_reqkv = {
+    string mumford_and_sons_v2_key = utils:get_key(mumford_and_sons_v2); //get a key of a record to be updated
+    Record mumford_and_sons_v3 = {
         date: "22/10/2020",
         artists: [
             {
@@ -89,8 +121,12 @@ public function main (string... args) {
                 member: "yes"
             },
             {
-                name: "Baaba Maal",
-                member: "no"
+                name: "Ted Dwane",
+                member: "yes"
+            },
+            {
+                name: "Marcus Mumford",
+                member: "yes"
             }
         ],
         band: "Mumford & Sons",
@@ -101,34 +137,35 @@ public function main (string... args) {
                 platform: "Deezer"
             },
             {
-                title: "Yes really There will be no time",
+                title: "Guiding Light",
                 genre: "folk rock",
                 platform: "Deezer"
             }
         ]
     };
-    update_record_reqkv["key"] = update_record_keykv;
-    update_record_reqkv["version"] = "1.1";
+    //replaced fake artists with real ones
+    mumford_and_sons_v3["key"] = mumford_and_sons_v2_key;
+    mumford_and_sons_v3["version"] = "1.1";
     log:printInfo("::::::Update an Existing Record: (key & version)");
-    update_record(blockingEp, update_record_reqkv);
+    update_record(blockingEp, mumford_and_sons_v3);
 
 
     // Read a record providing a key only
     log:printInfo("::::::Read an Existing Record: (key only)");
-    ReadRequest read_record_key = {key: update_record_key};
-    read_record(blockingEp, read_record_key);
+    ReadRequest read_request_ms = {key: mumford_and_sons_key};
+    read_record(blockingEp, read_request_ms);
 
 
     // Read a record providing a key and version
     log:printInfo("::::::Read an Existing Record: (key & version)");
-    ReadRequest key_and_version = {key: read_record_key.key,
+    ReadRequest read_request_ms_v1 = {key: mumford_and_sons_key,
                                    'version: "1.0"};
-    read_record(blockingEp, key_and_version);
+    read_record(blockingEp, read_request_ms_v1);
 
 
      //Read a record providing criterion..
      Criterion criterion = {artist_name: "",
-                            song_title: "",
+                            song_title: "The Storms",
                             band: "Mumford & Sons",
                             genre: ""};
      read_records_criterion(criterion);
@@ -191,7 +228,7 @@ public function update_record(recordMgtBlockingClient blockingEp, Record rec){
 }
 
 public function read_record(recordMgtBlockingClient blockingEp, ReadRequest read_req){
-    var read_response = blockingEp->readRecord(read_req);
+    var read_response = blockingEp->readRecordByVersion(read_req);
     if (read_response is error){
         log:printError("Error from Connector: "+ read_response.reason() +
                        " - "+ <string>read_response.detail()["message"] + "\n");
@@ -205,7 +242,6 @@ public function read_record(recordMgtBlockingClient blockingEp, ReadRequest read
 }
 
 public function read_records_criterion(Criterion criterion){
-    //initialize a nonBlocking recordClient
     recordMgtClient nonBlockingEp = new("http://localhost:9090");
     log:printInfo("::::::Read an Existing Record(s): (criterion)");
 
